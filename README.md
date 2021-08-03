@@ -53,6 +53,7 @@ The file directory is as follows:
 
 
 The following library files are required：
+-----------------------------
 
   torch-1.9.0
   
@@ -64,6 +65,7 @@ The following library files are required：
   This model is currently still in training.I will upload a pre-trained model as soon as possible~(due to my poor graphic card)
   
 Train your own model(训练你自己的模型):
+---------------------
 
 #已将数据集上传至百度网盘，连接如下：
 
