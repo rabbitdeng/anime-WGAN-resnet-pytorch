@@ -62,3 +62,11 @@ The following library files are required：
   
   
   This model is currently still in training.I will upload a pre-trained model as soon as possible~(due to my poor graphic card)
+  
+Train your own model(训练你自己的模型):
+
+#已将数据集上传至百度网盘，连接如下：
+
+#链接：https://pan.baidu.com/s/1FWSmO5ZClyDy7YIlFwY7pw
+
+#提取码：wwdy
