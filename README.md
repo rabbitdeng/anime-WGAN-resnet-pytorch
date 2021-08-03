@@ -2,6 +2,7 @@
 
 a GAN using Wasserstein loss and resnet to generate anime pics.
 
+一个resnet-WGAN用于生成各种二次元头像（你也可以使用别的图像数据集，用于生成图片）
 @author rabbitdeng
 
 @本项目用于深度学习中的学习交流，如有任何问题，欢迎联系我！联系方式QQ：741533684
