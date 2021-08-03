@@ -3,14 +3,15 @@ import torch.nn as nn
 
 from torch.nn import functional as F
 from torch.nn.utils import spectral_norm
+
 nz = 100
 nc = 3
 M = 32
 
-batch_size = 16
+batch_size = 16  #设置一个batch的大小，注意与train.py中相同
 
 class BasicBlock(nn.Module):
-    def __init__(self, in1):
+    def __init__(self, in1):  #in1为输入的channel大小，BasicBlock输出等于输入channel大小
         super(BasicBlock, self).__init__()
         self.conv1 = nn.Conv2d(in1, in1 * 2, kernel_size=1,
                                stride=1, padding=0, bias=False)

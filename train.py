@@ -7,6 +7,13 @@ import torch.nn as nn
 from model import RestNet18, Generator
 from losses import Wasserstein
 
+#已将数据集上传至百度网盘，连接如下：
+#链接：https://pan.baidu.com/s/1FWSmO5ZClyDy7YIlFwY7pw
+#提取码：wwdy
+#
+#
+#
+#
 
 def weights_init(m):
     classname = m.__class__.__name__
@@ -24,14 +31,14 @@ parser.add_argument('--nz', type=int, default=100, help='size of the latent z ve
 parser.add_argument('--ngf', type=int, default=64)
 parser.add_argument('--ndf', type=int, default=64)
 parser.add_argument('--epoch', type=int, default=2000, help='number of epochs to train for')
-parser.add_argument('--lrd', type=float, default=5e-5, help='learning rate, default=0.0002')
-parser.add_argument('--lrg', type=float, default=5e-5, help='learning rate, default=0.0002')
-
-parser.add_argument('--data_path', default='data/', help='folder to train data')
-parser.add_argument('--outf', default='resnetimg/', help='folder to output images and model checkpoints')
+parser.add_argument('--lrd', type=float, default=5e-5, help="Discriminator's learning rate, default=0.00005")  #Discriminator's learning rate
+parser.add_argument('--lrg', type=float, default=5e-5, help="Generator's learning rate, default=0.00005")  #Generator's learning rate
+parser.add_argument('--data_path', default='data/', help='folder to train data')#将数据集放在此处
+parser.add_argument('--outf', default='resnetimg/', help='folder to output images and model checkpoints')#输出生成图片以及保存模型的位置
 opt = parser.parse_args()
 # 定义是否使用GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 # 图像读入与预处理
 transforms = torchvision.transforms.Compose([
@@ -50,16 +57,15 @@ dataloader = torch.utils.data.DataLoader(
 netG = Generator().to(device)
 netG.apply(weights_init)
 print(netG)
+
 netD = RestNet18().to(device)
 netD.apply(weights_init)
 print(netD)
-# netG = NetG(opt.ngf)
-# netD = NetD(opt.ndf)
-# disnet = tm.resnet18(True)
 
 print(dataset)
-netG.load_state_dict(torch.load('resnetimg/netG_0025.pth', map_location=device))
-netD.load_state_dict(torch.load('resnetimg/netD_0025.pth', map_location=device))
+
+netG.load_state_dict(torch.load('resnetimg/netG_0025.pth', map_location=device))#这两句用来读取预训练模型
+netD.load_state_dict(torch.load('resnetimg/netD_0025.pth', map_location=device))#这两句用来读取预训练模型
 criterionG = Wasserstein()
 optimizerG = torch.optim.RMSprop(netG.parameters(), lr=opt.lrg)
 optimizerD = torch.optim.RMSprop(netD.parameters(), lr=opt.lrd)
@@ -67,26 +73,21 @@ criterionD = Wasserstein()
 label = torch.FloatTensor(opt.batchSize)
 real_label = 1
 fake_label = 0
+
 label = label.unsqueeze(1)
-# label = label.unsqueeze(1)
-# label = label.unsqueeze(1)
-start_epoch = 20
+
+start_epoch = 20  #设置初始epoch大小
+
 for epoch in range(start_epoch + 1, opt.epoch + 1):
     for i, (imgs, _) in enumerate(dataloader):
         # 固定生成器G，训练鉴别器D
-        ## 让D尽可能的把真图片判别为1
-
+        # 让D尽可能的把真图片判别为1
         imgs = imgs.to(device)
-        # imgs = imgs
-
         outputreal = netD(imgs)
-
         # label.data.fill_(real_label)
         # label = label.to(device)
         # label = label
-
         optimizerD.zero_grad()
-
         ## 让D尽可能把假图片判别为0
         # label.data.fill_(fake_label)
         noise = torch.randn(opt.batchSize, opt.nz)
@@ -95,11 +96,9 @@ for epoch in range(start_epoch + 1, opt.epoch + 1):
         # noise = noise
         fake = netG(noise)  # 生成假图
         outputfake = netD(fake.detach())  # 避免梯度传到G，因为G不用更新
-
         lossD = criterionD(outputreal, outputfake)
         lossD.backward()
         optimizerD.step()
-
         # 固定鉴别器D，训练生成器G
         optimizerG.zero_grad()
         # 让D尽可能把G生成的假图判别为1
@@ -108,16 +107,14 @@ for epoch in range(start_epoch + 1, opt.epoch + 1):
         # label = label
         output = netD(fake)
         lossG = criterionG(output)
-
         lossG.backward()
         optimizerG.step()
-
         print('[%d/%d][%d/%d] Loss_D: %.3f Loss_G %.3f'
-          % (epoch, opt.epoch, i, len(dataloader), lossD.item(), lossG.item()))
-
+              % (epoch, opt.epoch, i, len(dataloader), lossD.item(), lossG.item()))
     vutils.save_image(fake.data,
-                  '%s/fake_samples_epoch_%03d.png' % (opt.outf, epoch),
-                  normalize=True)
-    if epoch % 5 == 0:
+                      '%s/fake_samples_epoch_%03d.png' % (opt.outf, epoch),
+                      normalize=True)
+
+    if epoch % 5 == 0:#每5个epoch，保存一次模型参数.
         torch.save(netG.state_dict(), '%s/netG_%04d.pth' % (opt.outf, epoch))
         torch.save(netD.state_dict(), '%s/netD_%04d.pth' % (opt.outf, epoch))
