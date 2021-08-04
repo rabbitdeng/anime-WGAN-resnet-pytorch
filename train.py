@@ -66,7 +66,7 @@ print(dataset)
 
 #netG.load_state_dict(torch.load('resnetimg/netG_0025.pth', map_location=device))#这两句用来读取预训练模型
 #netD.load_state_dict(torch.load('resnetimg/netD_0025.pth', map_location=device))#这两句用来读取预训练模型
-criterionG = Hinge()
+criterionG = Hinge()#use Hinge to avoid gredient icrease drasticly
 optimizerG = torch.optim.RMSprop(netG.parameters(), lr=opt.lrg)
 optimizerD = torch.optim.RMSprop(netD.parameters(), lr=opt.lrd)
 criterionD = Hinge()
