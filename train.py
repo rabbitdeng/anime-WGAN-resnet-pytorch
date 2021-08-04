@@ -64,12 +64,12 @@ print(netD)
 
 print(dataset)
 
-netG.load_state_dict(torch.load('resnetimg/netG_0025.pth', map_location=device))#这两句用来读取预训练模型
-netD.load_state_dict(torch.load('resnetimg/netD_0025.pth', map_location=device))#这两句用来读取预训练模型
-criterionG = Wasserstein()
+#netG.load_state_dict(torch.load('resnetimg/netG_0025.pth', map_location=device))#这两句用来读取预训练模型
+#netD.load_state_dict(torch.load('resnetimg/netD_0025.pth', map_location=device))#这两句用来读取预训练模型
+criterionG = Hinge()
 optimizerG = torch.optim.RMSprop(netG.parameters(), lr=opt.lrg)
 optimizerD = torch.optim.RMSprop(netD.parameters(), lr=opt.lrd)
-criterionD = Wasserstein()
+criterionD = Hinge()
 label = torch.FloatTensor(opt.batchSize)
 real_label = 1
 fake_label = 0
