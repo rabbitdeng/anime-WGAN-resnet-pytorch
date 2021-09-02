@@ -18,6 +18,8 @@ a GAN using Wasserstein loss and resnet to generate anime pics.
 And modify the optimizer from Adam to RMSprop (Note: Adam is easy to cause unstable training, and the learning rate cannot be too large.)
 
 
+#2021/9/2
+#突然发现看到的人还挺多的，这个项目的超参数并没有设置到比较优秀的水平，也很容易出现model collapse，建议大伙调低学习率，生成64*64像素图片试试。比较惭愧😂，我也是GAN的初学者，由于残差网络做GAN训#练难度相对很高，我也在学习训练技巧，如果大家不一定要使用RESNET的话，不妨尝试我的另一个SAGAN的项目。日后的学习中，我会做好一个
 
 The file directory is as follows:
 --------------------------------
