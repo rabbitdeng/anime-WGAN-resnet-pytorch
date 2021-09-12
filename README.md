@@ -1,5 +1,8 @@
 # anime-WGAN-resnet-pytorch
 
+
+![fake_samples_epoch_300](https://user-images.githubusercontent.com/88369122/132981320-f8d18028-4f95-47dc-a2f5-3dc7eb755d00.png)
+#以上是在1000个图片上训练300epoch后的效果，用时大概一小时（RTX3070一块）
 a GAN using Wasserstein loss and resnet to generate anime pics.
 
 一个resnet-WGAN用于生成各种二次元头像（你也可以使用别的图像数据集，用于生成图片）
