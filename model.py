@@ -8,7 +8,7 @@ nz = 100
 nc = 3
 M = 32
 
-batch_size = 8  #设置一个batch的大小，注意与train.py中相同
+batch_size = 32  #设置一个batch的大小，注意与train.py中相同
 
 class BasicBlock(nn.Module):
     def __init__(self, in1):  #in1为输入的channel大小，BasicBlock输出等于输入channel大小
