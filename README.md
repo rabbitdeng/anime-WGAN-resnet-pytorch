@@ -9,7 +9,7 @@ a GAN using Wasserstein loss and resnet to generate anime pics.
 
 @author rabbitdeng
 
-@本项目用于深度学习中的学习交流，如有任何问题，欢迎联系我！联系方式QQ：741533684
+@本项目用于深度学习中的学习交流，如有任何问题，欢迎在Issues中提问！
 
 #This project is used for learning exchanges in deep learning. If you have any questions, please feel free to contact us! Contact QQ: 741533684
 
