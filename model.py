@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-
+from config import opt
 from torch.nn import functional as F
 from torch.nn.utils import spectral_norm
 
@@ -8,7 +8,6 @@ nz = 100
 nc = 3
 M = 32
 
-batch_size = 32  #设置一个batch的大小，注意与train.py中相同
 
 class BasicBlock(nn.Module):
     def __init__(self, in1):  #in1为输入的channel大小，BasicBlock输出等于输入channel大小
@@ -109,8 +108,8 @@ class netG(nn.Module):
         )
         self.Conv = nn.Sequential(
             BasicBlock(64),
-            nn.BatchNorm2d(64),
-          #  nn.LayerNorm([64,96,96]),
+            #nn.BatchNorm2d(64),
+            nn.LayerNorm([64,64,64]),
             nn.ReLU(True),
             nn.Conv2d(64, 3, kernel_size=3, padding=1, stride=1),
             nn.Tanh()
@@ -119,7 +118,7 @@ class netG(nn.Module):
 
     def forward(self, z):
         x = self.linear(z)
-        x = x.view(batch_size,64,2,2)
+        x = x.view(opt.batchsize,64,2,2)
         x = self.layer1(x)
         x = self.layer2(x)
         x = self.layer3(x)
