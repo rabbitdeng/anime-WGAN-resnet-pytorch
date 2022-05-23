@@ -52,6 +52,9 @@ The file directory is as follows:
 |
 ---train.py
 
+|
+---config.py
+
 
 
 
@@ -66,6 +69,7 @@ The following library files are required：
   
   argparse
   
+  albumentations
   
   This model is currently still in training.I will upload a pre-trained model as soon as possible~(due to my poor graphic card)
   
