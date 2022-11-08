@@ -78,6 +78,6 @@ Train your own model(训练你自己的模型):
 
 #连接如下：
 
-#download the dataset at googledrive:
-https://drive.google.com/file/d/1fMJrg2KH0S00PO2SK8in3BArU8MbTe1J/view?usp=sharing
+#download the dataset at kaggle:
+https://www.kaggle.com/datasets/prasoonkottarathil/gananime-lite
 
